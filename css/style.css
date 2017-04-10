@@ -1,0 +1,352 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100%;
+}
+
+
+.btn {
+    padding: 5px;
+    width: 110px;
+}
+
+#btn-calc {
+    width: 140px;
+}
+
+#btn-start {
+    margin-right: 5px;
+}
+#upper-container {
+    align-content: stretch;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.btn-circle {
+    background-color: transparent;
+    border-radius: 50%;
+    display: inline;
+    height: 30px;
+    margin-right: 2px;
+    padding: 0;
+    width: 30px;
+}
+
+.btn-circle i {
+    color: gray;
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+.btn-circle i:hover {
+    color: black;
+}
+
+.showable {
+    display: none;
+}
+
+#marker-info {
+    font-family: Signika, sans-serif;
+    padding: 10px;
+}
+
+#marker-info h5 {
+    display: inline;
+    margin-top: 0;
+}
+
+/* MENU */
+#top-panel {
+    alignment: center;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px grey;
+    font-family: Signika, sans-serif;
+    margin: 10px;
+    padding: 10px;
+    width: 360px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    z-index: 1;
+!important
+}
+
+#location-container {
+    width: 80%;
+    margin-right: 5px;
+}
+
+#top-panel ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    width: 20%;
+}
+
+#top-panel li {
+    display: block;
+    color: white;
+    list-style: none;
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+}
+
+#top-panel li span {
+    height: 25px;
+    padding: 4px;
+}
+
+#top-panel div span i {
+    color: #ff4845;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+#input-location {
+    font-size: 18px;
+}
+
+/*** Carousel ***/
+#guide-carousel {
+    background-color: dodgerblue;
+    border-radius: 5px;
+    bottom: 0;
+    color: white;
+    font-family: Signika, sans-serif;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-shadow: #7a7a7a 4px 3px 0;
+    top: 0;
+}
+
+#guide-carousel h1 {
+    text-align: center;
+}
+
+.carousel-caption {
+    color: white;
+    position: relative;
+    left: auto;
+    right: auto;
+    margin: auto;
+    width: calc(100% - 40px);
+    padding-bottom: 0;
+}
+
+.carousel-caption p {
+    font-size: 18px;
+    margin: 0;
+}
+
+.carousel-control.right {
+    background-image: linear-gradient(to right, dodgerblue 0%, #1e468b 100%);
+    border-radius: 5px;
+    opacity: 0.3;
+}
+
+.carousel-control.left {
+    background-image: linear-gradient(to left, dodgerblue 0%, #1e468b 100%);
+    border-radius: 5px;
+    opacity: 0.3;
+}
+
+.carousel-control span:hover {
+    color: black;
+}
+
+#btn-close-guide {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    bottom: auto;
+    left: auto;
+    z-index: 10;
+}
+
+#btn-close-guide i {
+    font-size: 32px;
+    color: white;
+}
+
+#btn-close-guide i:hover {
+    color: #7a7a7a;
+}
+
+.carousel-caption h3 img {
+    margin-top: -8px;
+}
+
+.carousel-indicators {
+    bottom: 0;
+}
+
+#guide-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
+    z-index: 1;
+}
+
+#guide-icon:hover {
+    cursor: pointer;
+    margin: 10px;
+    height: 54px;
+    width: 54px;
+}
+
+#guide-content {
+    position: absolute;
+    top: 70px;
+    bottom: 40px;
+    left: 15%;
+    right: 15%;
+    overflow: auto;
+}
+
+.carousel-inner img.img-responsive {
+    margin: auto;
+    width: calc(100% - 40px);
+}
+
+.carousel-inner img.img-small {
+    margin: auto;
+}
+
+.inseparable {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+    #guide-icon {
+        top: 65px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    #guide-carousel {
+        top: 5%;
+        bottom: 5%;
+        right: 0;
+        left: 0;
+    }
+
+    @media only screen and (max-height: 600px) {
+        #guide-carousel {
+            top: 0;
+            bottom: 0;
+            right: 25%;
+            left: 25%;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #guide-carousel {
+        top: 10%;
+        bottom: 10%;
+        right: 0;
+        left: 0;
+    }
+
+    @media only screen and (max-height: 768px) {
+        #guide-carousel {
+            top: 0;
+            bottom: 0;
+            right: 10%;
+            left: 10%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    #guide-carousel {
+        top: 15%;
+        bottom: 15%;
+        right: 0;
+        left: 0;
+    }
+
+    @media only screen and (max-height: 1024px) {
+        #guide-carousel {
+            top: 5%;
+            bottom: 5%;
+            right: 15%;
+            left: 15%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    #guide-carousel {
+        top: 20%;
+        bottom: 20%;
+        right: 5%;
+        left: 5%;
+    }
+
+    @media only screen and (max-height: 1280px) {
+        #guide-carousel {
+            top: 5%;
+            bottom: 5%;
+            right: 25%;
+            left: 25%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    #guide-carousel {
+        top: 20%;
+        bottom: 20%;
+        right: 10%;
+        left: 10%;
+    }
+
+    @media only screen and (max-height: 1440px) {
+        #guide-carousel {
+            top: 5%;
+            bottom: 5%;
+            right: 25%;
+            left: 25%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    #guide-carousel {
+        top: 20%;
+        bottom: 20%;
+        right: 15%;
+        left: 15%;
+    }
+
+    @media only screen and (max-height: 1920px) {
+        #guide-carousel {
+            top: 5%;
+            bottom: 5%;
+            right: 25%;
+            left: 25%;
+        }
+    }
+}
