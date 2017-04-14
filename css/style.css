@@ -160,6 +160,7 @@ body {
 }
 
 #guide-content {
+    display: flex;
     bottom: 40px;
     left: 15%;
     position: absolute;
@@ -220,6 +221,10 @@ body {
 
 .carousel-indicators {
     bottom: 0;
+}
+
+.carousel-inner {
+    margin: auto;
 }
 
 .carousel-inner img.img-responsive {

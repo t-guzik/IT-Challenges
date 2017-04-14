@@ -88,7 +88,6 @@ function initMap() {
         showGuide();
     }
 
-
     /** Initiate Google Maps elements */
     map = new google.maps.Map(mapDiv[0], {
         center: {lat: 50.06465, lng: 19.94498},
@@ -127,11 +126,6 @@ function initMap() {
     });
 
     /** Assign event handlers */
-    tooltips.tooltip();
-    tooltips.click(function () {
-        $(this).tooltip('hide');
-    });
-
     calcBtn.click(function () {
         calcBtnSelected = true;
         prettyDistance();
@@ -163,7 +157,6 @@ function initMap() {
         setMarkerAnimation(destinationPoint, startingPoint);
         setMarkerStruct(selectedMarker, destinationPoint, startingPoint);
         clearInterval(animateInterval);
-        calcBtnSelected = false;
         drawPathAndCenterMap(startingPoint, destinationPoint);
     });
 
@@ -197,8 +190,12 @@ function initMap() {
         setMarkerAnimation(startingPoint, destinationPoint);
         setMarkerStruct(selectedMarker, startingPoint, destinationPoint);
         clearInterval(animateInterval);
-        calcBtnSelected = false;
         drawPathAndCenterMap(startingPoint, destinationPoint);
+    });
+
+    tooltips.tooltip();
+    tooltips.click(function () {
+        $(this).tooltip('hide');
     });
 
     /** Assign Google Map elements listeners */
@@ -220,14 +217,9 @@ function initMap() {
     });
 
     path.addListener('click', function () {
-        if (calcBtnSelected) {
-            prettyDistance();
-            infoWindow.setPosition(new google.maps.LatLng(centerLat, centerLng));
-            infoWindow.open(map);
-        }
-        else {
-            infoWindow.open(map);
-        }
+        prettyDistance();
+        infoWindow.setPosition(new google.maps.LatLng(centerLat, centerLng));
+        infoWindow.open(map);
     });
 
     autocomplete.addListener('place_changed', function () {
@@ -266,13 +258,10 @@ function prettyDistance() {
     if (!distance)
         return;
 
-    if (distance > 1000) {
-        distance /= 1000;
-        distance = distance.toFixed(3);
-        infoWindow.setContent('Distance: ' + distance.toString() + ' km');
-    }
+    if (distance > 1000)
+        infoWindow.setContent('Distance: ' + (distance / 1000).toFixed(3) + ' km');
     else
-        infoWindow.setContent('Distance: ' + distance.toString() + ' m');
+        infoWindow.setContent('Distance: ' + distance + ' m');
 }
 
 function placeMarkerAndPanTo(latLng, map) {
@@ -332,6 +321,7 @@ function setMarkerStruct(marker, selectedMarkerStruct, linkedMarkerStruct) {
         clearMarkerStruct(linkedMarkerStruct);
     }
     markers[selectedMarkerStruct.markerIndex].setIcon(selectedMarkerStruct.icon);
+    calcBtnSelected = false;
 }
 
 function setMarkerAnimation(selectedMarkerStruct, linkedMarkerStruct) {
