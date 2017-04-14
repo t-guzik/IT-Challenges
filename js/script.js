@@ -3,15 +3,16 @@
 /*************************************************/
 /********************* DATA **********************/
 /*************************************************/
-var debugging = false;
+var debugging = true;
 
-var map;
+/** Google Maps elements */
+var autocomplete;
+var bounds;
 var geocoder;
 var infoWindow;
-var bounds;
+var map;
 var path;
 var pathSymbol;
-var autocomplete;
 var selectedMarker;
 
 /** All map's active markers */
@@ -19,42 +20,44 @@ var markers = [];
 
 /** Selected markers structures */
 var startingPoint = {
-    markerType: 'startingPoint',
-    markerIndex: -1,
+    icon: 'https://maps.google.com/mapfiles/kml/paddle/1.png',
     lat: -1,
     lng: -1,
-    icon: 'https://maps.google.com/mapfiles/kml/paddle/1.png'
+    markerIndex: -1,
+    markerType: 'startingPoint'
 };
 
 var destinationPoint = {
-    markerType: 'destinationPoint',
-    markerIndex: -1,
+    icon: 'https://maps.google.com/mapfiles/kml/paddle/2.png',
     lat: -1,
     lng: -1,
-    icon: 'https://maps.google.com/mapfiles/kml/paddle/2.png'
+    markerIndex: -1,
+    markerType: 'destinationPoint'
 };
-
-var distance;
-var centerLat;
-var centerLng;
+/** Auxiliary variables */
 var animateInterval;
 var calcBtnSelected = false;
+var centerLat;
+var centerLng;
+var distance;
+var mapReady = false;
 
 /** HTML elements */
 var addressH5;
 var calcBtn;
 var closeGuideBtn;
-var deleteBtn;
 var deleteAllBtn;
+var deleteBtn;
 var deselectBtn;
 var destinationBtn;
-var markerInfoDiv;
 var fitMapBtn;
 var guideDiv;
 var guideIcon;
 var locationInput;
 var mapDiv;
+var markerInfoDiv;
 var startBtn;
+var tooltips;
 var topPanelDiv;
 
 /*******************************************************/
@@ -62,10 +65,7 @@ var topPanelDiv;
 /*******************************************************/
 
 function initMap() {
-    var mapReady = false;
-
     /** Get HTML elements */
-    $('[data-toggle="tooltip"]').tooltip();
     addressH5 = $('#address');
     calcBtn = $('#btn-calc');
     closeGuideBtn = $('#btn-close-guide');
@@ -73,13 +73,14 @@ function initMap() {
     deleteBtn = $('#btn-delete');
     deselectBtn = $('#btn-deselect');
     destinationBtn = $('#btn-destination');
-    markerInfoDiv = $('#marker-info');
     fitMapBtn = $('#btn-fit-map');
     guideDiv = $('#guide-carousel');
     guideIcon = $('#guide-icon');
     locationInput = $('#input-location');
     mapDiv = $('#map');
+    markerInfoDiv = $('#marker-info');
     startBtn = $('#btn-start');
+    tooltips = $('[data-toggle="tooltip"]');
     topPanelDiv = $('#top-panel');
 
     /** Show guide if user is first time on website */
@@ -87,17 +88,18 @@ function initMap() {
         showGuide();
     }
 
+
     /** Initiate Google Maps elements */
     map = new google.maps.Map(mapDiv[0], {
-        fullscreenControl: false,
-        draggableCursor: 'auto',
-        zoom: 14,
         center: {lat: 50.06465, lng: 19.94498},
+        draggableCursor: 'auto',
+        fullscreenControl: false,
         mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.DEFAULT,
             position: google.maps.ControlPosition.LEFT_BOTTOM
-        }
+        },
+        zoom: 14
     });
 
     autocomplete = new google.maps.places.Autocomplete(locationInput[0]);
@@ -125,6 +127,11 @@ function initMap() {
     });
 
     /** Assign event handlers */
+    tooltips.tooltip();
+    tooltips.click(function () {
+        $(this).tooltip('hide');
+    });
+
     calcBtn.click(function () {
         calcBtnSelected = true;
         prettyDistance();
@@ -156,6 +163,7 @@ function initMap() {
         setMarkerAnimation(destinationPoint, startingPoint);
         setMarkerStruct(selectedMarker, destinationPoint, startingPoint);
         clearInterval(animateInterval);
+        calcBtnSelected = false;
         drawPathAndCenterMap(startingPoint, destinationPoint);
     });
 
@@ -189,6 +197,7 @@ function initMap() {
         setMarkerAnimation(startingPoint, destinationPoint);
         setMarkerStruct(selectedMarker, startingPoint, destinationPoint);
         clearInterval(animateInterval);
+        calcBtnSelected = false;
         drawPathAndCenterMap(startingPoint, destinationPoint);
     });
 
@@ -203,7 +212,9 @@ function initMap() {
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(topPanelDiv[0]);
             topPanelDiv.fadeIn('fast');
             topPanelDiv.css('display', 'flex');
-            guideIcon.fadeIn('fast');
+            if (localStorage.getItem('guide') != null)
+                guideIcon.fadeIn('fast');
+
             mapReady = true;
         }
     });
@@ -335,7 +346,7 @@ function setMarkerAnimation(selectedMarkerStruct, linkedMarkerStruct) {
 function showMarkerInfo(marker) {
     addressH5.html(marker.address);
     infoWindow.setContent(markerInfoDiv[0]);
-    markerInfoDiv.fadeIn('slow');
+    markerInfoDiv.css('display', 'block');
     infoWindow.open(map, marker);
 }
 
